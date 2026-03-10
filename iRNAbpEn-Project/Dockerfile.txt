@@ -1,0 +1,15 @@
+# Step 1: Start with a system that already has Python and PyTorch
+FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+
+# Step 2: Create a folder inside this "virtual machine" for your work
+WORKDIR /app
+
+# Step 3: Copy your requirements and install the libraries
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Step 4: Copy all your notebooks and data into the container
+COPY . .
+
+# Step 5: Tell the container to open Jupyter Notebook when it starts
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
